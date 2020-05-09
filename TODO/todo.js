@@ -15,7 +15,7 @@ function parseCmdArgs(args){
 
 function main(cmdArgs){
     const parsedOptions = parseCmdArgs(cmdArgs);
-
+    
     switch (parsedOptions.command){
         case 'add':
             todoHelpers.addTodo(parsedOptions);
