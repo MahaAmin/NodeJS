@@ -79,7 +79,14 @@ exports.checkTodo = function checkTodo(options){
 }
 
 exports.uncheckTodo = function uncheckTodo(options){
-    console.log("in uncheckTodo");
+    todosData = readTodosFromFile('todosData');    
+    for(i=0; i<todosData.length; i++){
+        if(todosData[i]['id'] == options['id']){
+            todosData[i]['checked'] = false;
+            break;
+        }
+    }
+    writeTodosToFile('todosData', todosData);
 }
 
 
