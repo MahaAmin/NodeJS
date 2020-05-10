@@ -64,7 +64,14 @@ exports.listTodo = function listTodo(options){
 }
 
 exports.removeTodo = function removeTodo(options){
-    console.log("in removeTodo");
+    todosData = readTodosFromFile('todosData');
+    for(i=0; i<todosData.length; i++){
+        if(todosData[i]['id'] == options['id']){
+            todosData.splice(i,1);
+            break;
+        }
+    }
+    writeTodosToFile('todosData', todosData);
 }
 
 exports.checkTodo = function checkTodo(options){
