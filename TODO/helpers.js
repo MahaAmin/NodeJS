@@ -44,7 +44,7 @@ exports.addTodo = function addTodo(options){
 }
 
 exports.editTodo = function editTodo(options){
-     
+
     todosData = readTodosFromFile('todosData');
     for(i=0; i<todosData.length; i++){
         if(todosData[i]["id"] == options["id"]){
@@ -68,7 +68,14 @@ exports.removeTodo = function removeTodo(options){
 }
 
 exports.checkTodo = function checkTodo(options){
-    console.log("in checkTodo");
+    todosData = readTodosFromFile('todosData');    
+    for(i=0; i<todosData.length; i++){
+        if(todosData[i]['id'] == options['id']){
+            todosData[i]['checked'] = true;
+            break;
+        }
+    }
+    writeTodosToFile('todosData', todosData);
 }
 
 exports.uncheckTodo = function uncheckTodo(options){
