@@ -59,8 +59,37 @@ exports.editTodo = function editTodo(options){
     writeTodosToFile('todosData', todosData);
 }
 
+
+function printTodo(todo){
+    for(var key of Object.keys(todo)){
+        console.log(key + ': ' + todo[key]);
+    }
+    console.log('-------------------------------------------------');
+}
+
+
 exports.listTodo = function listTodo(options){
-    console.log("in listTodo");
+    todosData = readTodosFromFile('todosData');
+    for(var key of Object.keys(options)){
+        switch(key){
+            case 'all':
+                todosData.map(todo => printTodo(todo));
+                break;
+            case 'checked':
+                checkedTodos = todosData.filter(todo => todo.checked == true);
+                checkedTodos.map(todo => printTodo(todo));
+                break;
+            case 'unchecked':
+                checkedTodos = todosData.filter(todo => todo.checked == false);
+                checkedTodos.map(todo => printTodo(todo));
+                break;
+            case 'command':
+                break;
+            default:
+                console.log('ERROR: Un-defined argument: ' + key);
+                break;
+        }
+    }
 }
 
 exports.removeTodo = function removeTodo(options){
