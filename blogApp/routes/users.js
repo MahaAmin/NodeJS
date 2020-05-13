@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const UserModel = require('../models/users');
 
 
 router.use((req, res, next) => {
@@ -7,8 +8,13 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/', (req, res) => {
-    res.send('listing all users');
+router.get('/', (req, res, next) => {
+    UserModel.find({}, (err, users) => {
+         if(!err){
+             res.json(users);
+         }
+         next(err);
+    });
 });
 
 
@@ -17,8 +23,31 @@ router.get('/:id', (req, res) => {
 });
 
 
-router.post('/', (req, res) => {
-    res.send('create new user');
+router.post('/', (req, res, next) => {
+    debugger;
+    // get request body --> req.body --> express.json()
+    const {firstName, lastName, password, dob, gender, email, phone} = req.body;
+    // construct user instance from user model
+    const userInstance = new UserModel({
+        firstName: firstName,
+        lastName: lastName,
+        password: password,
+        dob: dob,
+        gender: gender,
+        email: email,
+        phone: phone,
+    });
+
+    const fullName = userInstance.getFullName();
+    console.log(fullName);
+    
+    // save user in database
+    userInstance.save((err, user) => {
+        if(!err) return res.json(user);
+        next(err);
+    })
+
+
 });
 
 
